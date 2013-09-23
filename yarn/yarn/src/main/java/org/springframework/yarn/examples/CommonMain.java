@@ -15,6 +15,9 @@
  */
 package org.springframework.yarn.examples;
 
+import java.util.Properties;
+
+import org.springframework.util.StringUtils;
 import org.springframework.yarn.YarnSystemConstants;
 import org.springframework.yarn.client.CommandLineClientRunner;
 
@@ -27,8 +30,17 @@ import org.springframework.yarn.client.CommandLineClientRunner;
 public class CommonMain extends CommandLineClientRunner {
 
 	public static void main(String args[]) {
+		Properties properties = StringUtils.splitArrayElementsIntoProperties(args, "=");
+		if (properties == null) {
+			properties = new Properties();
+		}
+
+		String config = Boolean.parseBoolean(properties.getProperty("javaconfig")) ?
+				"org.springframework.yarn.examples.ClientConfiguration" :
+				YarnSystemConstants.DEFAULT_CONTEXT_FILE_CLIENT;
+
 		new CommonMain().doMain(new String[] {
-				YarnSystemConstants.DEFAULT_CONTEXT_FILE_CLIENT,
+				config,
 				YarnSystemConstants.DEFAULT_ID_CLIENT,
 				CommandLineClientRunner.OPT_SUBMIT
 		});

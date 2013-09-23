@@ -31,12 +31,10 @@ import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.test.annotation.Timed;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.yarn.test.context.MiniYarnCluster;
-import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
 import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 
 /**
+ * Base test for multi context example.
  * Tests for multi context example. We're checking that
  * application status is ok and log files looks
  * what is expected.
@@ -44,9 +42,7 @@ import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
  * @author Janne Valkealahti
  *
  */
-@ContextConfiguration(loader=YarnDelegatingSmartContextLoader.class)
-@MiniYarnCluster
-public class MultiContextTests extends AbstractYarnClusterTests {
+public abstract class MultiContextTests extends AbstractYarnClusterTests {
 
 	@Test
 	@Timed(millis=120000)

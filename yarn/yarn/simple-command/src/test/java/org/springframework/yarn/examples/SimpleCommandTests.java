@@ -29,20 +29,15 @@ import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.test.annotation.Timed;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.yarn.test.context.MiniYarnCluster;
-import org.springframework.yarn.test.context.YarnDelegatingSmartContextLoader;
 import org.springframework.yarn.test.junit.AbstractYarnClusterTests;
 
 /**
- * Tests for simple command example.
+ * Base test for simple command example.
  *
  * @author Janne Valkealahti
  *
  */
-@ContextConfiguration(loader=YarnDelegatingSmartContextLoader.class)
-@MiniYarnCluster
-public class SimpleCommandTests extends AbstractYarnClusterTests {
+public abstract class SimpleCommandTests extends AbstractYarnClusterTests {
 
 	@Test
 	@Timed(millis=70000)
