@@ -26,6 +26,10 @@ project('yarn-examples-batch-files') {
   description = 'Spring Yarn with Batch Files Example'
 }
 
+project('yarn-examples-batch-linestorage') {
+  description = 'Spring Yarn with Batch Line Storage Example'
+}
+
 project('yarn-examples-batch-amjob') {
   description = 'Spring Yarn Batch Application Master Job Example'
 }
