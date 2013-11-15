@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:yarn="http://www.springframework.org/schema/yarn"
+	xmlns:yarn-int="http://www.springframework.org/schema/yarn/integration"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/yarn http://www.springframework.org/schema/yarn/spring-yarn.xsd
+		http://www.springframework.org/schema/yarn/integration http://www.springframework.org/schema/yarn/integration/spring-yarn-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:property-placeholder location="hadoop.properties" system-properties-mode="OVERRIDE"/>
+
+	<yarn:localresources>
+		<yarn:copy src="file:build/dependency-libs/*" dest="/lib/"/>
+		<yarn:copy src="file:build/libs/*" dest="/app/container-groups/"/>
+		<yarn:hdfs path="/app/container-groups/*.jar"/>
+		<yarn:hdfs path="/lib/*"/>
+	</yarn:localresources>
+
+	<yarn:environment include-system-env="false">
+		<yarn:classpath/>
+	</yarn:environment>
+
+	<util:properties id="customArguments">
+		<prop key="container-count">${ca.cc:'0'}</prop>
+	</util:properties>
+
+	<yarn:client app-name="container-groups">
+		<yarn:master-runner arguments="customArguments"/>
+	</yarn:client>
+
+	<bean id="mapper" class="org.springframework.yarn.integration.support.Jackson2ObjectMapperFactoryBean" />
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindObjectToHolderConverter">
+			<constructor-arg ref="mapper"/>
+		</bean>
+	</yarn-int:converter>
+
+	<yarn-int:converter>
+		<bean class="org.springframework.yarn.integration.convert.MindHolderToObjectConverter">
+			<constructor-arg ref="mapper"/>
+		</bean>
+	</yarn-int:converter>
+
+</beans>

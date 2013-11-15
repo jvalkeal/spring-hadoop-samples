@@ -34,6 +34,10 @@ project('yarn-examples-custom-amservice') {
   description = 'Spring Yarn with Custom Application Master Service Example'
 }
 
+project('yarn-examples-container-groups') {
+  description = 'Spring Yarn with Managed Container Groups Example'
+}
+
 project('yarn-examples-restart-context') {
   description = 'Spring Yarn with Restart Context Example'
 }
