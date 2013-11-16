@@ -1,0 +1,6 @@
+description = 'Spring Hadoop MapReduce Examples Common'
+
+project('mapreduce-examples-wordcount') {
+  description = 'Spring Hadoop with Wordcount Example'
+}
+

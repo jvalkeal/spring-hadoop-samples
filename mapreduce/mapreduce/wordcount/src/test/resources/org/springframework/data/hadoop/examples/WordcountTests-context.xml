@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:hdp="http://www.springframework.org/schema/hadoop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+	<context:property-placeholder location="hadoop.properties" />
+
+	<hdp:job id="wordcountJob"
+		input-path="${wordcount.input.path}"
+		output-path="${wordcount.output.path}"
+		libs="file:build/libs/mapreduce-examples-wordcount-*.jar"
+		mapper="org.springframework.data.hadoop.examples.TokenizerMapper"
+		reducer="org.springframework.data.hadoop.examples.IntSumReducer" />
+
+	<hdp:script id="setupScript" location="copy-files.groovy">
+		<hdp:property name="localSourceFile" value="data/nietzsche-chapter-1.txt" />
+		<hdp:property name="inputDir" value="${wordcount.input.path}" />
+		<hdp:property name="outputDir" value="${wordcount.output.path}" />
+	</hdp:script>
+
+	<hdp:job-runner id="runner"
+		run-at-startup="false"
+		pre-action="setupScript"
+		job-ref="wordcountJob" />
+
+</beans>

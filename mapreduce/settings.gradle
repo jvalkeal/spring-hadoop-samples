@@ -1,0 +1,12 @@
+rootProject.name = 'spring-mapreduce-examples'
+
+include ':mapreduce:wordcount'
+
+rootProject.children.find {
+	if (it.name == 'mapreduce') {
+		it.name = 'mapreduce-examples-common'		
+		it.children.each {
+			it.name = 'mapreduce-examples-' + it.name
+		}
+	}
+}
