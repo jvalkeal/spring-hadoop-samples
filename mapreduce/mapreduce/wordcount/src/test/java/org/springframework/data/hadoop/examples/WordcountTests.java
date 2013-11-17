@@ -18,15 +18,19 @@ package org.springframework.data.hadoop.examples;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 import org.springframework.data.hadoop.mapreduce.JobRunner;
+import org.springframework.data.hadoop.mapreduce.JobUtils.JobStatus;
 import org.springframework.data.hadoop.test.context.HadoopDelegatingSmartContextLoader;
 import org.springframework.data.hadoop.test.context.MiniHadoopCluster;
 import org.springframework.data.hadoop.test.junit.AbstractMapReduceTests;
@@ -34,20 +38,25 @@ import org.springframework.test.context.ContextConfiguration;
 
 /**
  * Tests for wordcount example.
- * 
+ *
  * @author Janne Valkealahti
- * 
+ *
  */
 @ContextConfiguration(loader=HadoopDelegatingSmartContextLoader.class)
 @MiniHadoopCluster
 public class WordcountTests extends AbstractMapReduceTests {
-	
+
 	@Test
 	public void testWordcountJob() throws Exception {
 
 		// run blocks and throws exception if job failed
-		JobRunner runner = (JobRunner) getApplicationContext().getBean("runner");
+		JobRunner runner = getApplicationContext().getBean("runner", JobRunner.class);
+		Job wordcountJob = getApplicationContext().getBean("wordcountJob", Job.class);
+
 		runner.call();
+
+		JobStatus finishedStatus = waitFinishedStatus(wordcountJob, 60, TimeUnit.SECONDS);
+		assertThat(finishedStatus, notNullValue());
 
 		// get output files from a job
 		Path[] outputFiles = getOutputFilePaths("/user/gutenberg/output/word/");

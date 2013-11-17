@@ -24,6 +24,8 @@
 
 	<hdp:job-runner id="runner"
 		run-at-startup="false"
+		kill-job-at-shutdown="false"
+		wait-for-completion="false"
 		pre-action="setupScript"
 		job-ref="wordcountJob" />
 
