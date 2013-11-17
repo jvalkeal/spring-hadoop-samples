@@ -29,16 +29,54 @@ def springDataVersion = hadoop22SpringDataVersion
 
 switch (hadoopDistro) {
 
-	// vanilla hadoop 2.2.x
 	case "hadoop22":
 		springDataVersion = hadoop22SpringDataVersion
 		println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
 	break;
 
-	// pivotal
 	case "phd1":
 		springDataVersion = phd1SpringDataVersion
 		println "Using Pivotal HD 1.0 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "cdh4yarn":
+		springDataVersion = cdh4yarnSpringDataVersion
+		println "Using Cloudera CDH4 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "cdh4mr1":
+		springDataVersion = cdh4mr1SpringDataVersion
+		println "Using Cloudera CDH4 MR1 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "cdh5yarn":
+		springDataVersion = cdh5yarnSpringDataVersion
+		println "Using Cloudera CDH5 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "cdh5mr1":
+		springDataVersion = cdh5mr1SpringDataVersion
+		println "Using Cloudera CDH5 MR1 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "hdp13":
+		springDataVersion = hdp13SpringDataVersion
+		println "Using Hortonworks Data Platform 1.3 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "hdp20":
+		springDataVersion = hdp20SpringDataVersion
+		println "Using Hortonworks Data Platform 2.0 Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "hadoop11":
+		springDataVersion = hadoop11SpringDataVersion
+		println "Using Apache Hadoop 1.1.x Spring Hadoop Dependencies - [$springDataVersion]"
+	break;
+
+	case "hadoop12":
+		springDataVersion = hadoop12SpringDataVersion
+		println "Using Apache Hadoop 1.2.x Spring Hadoop Dependencies - [$springDataVersion]"
 	break;
 
 	default:
@@ -49,7 +87,7 @@ switch (hadoopDistro) {
 				println "Using Apache Hadoop 2.2.x Spring Hadoop Dependencies - [$springDataVersion]"
 			} else {
 				println "Failing build: $hadoopDistro is not a supported distro"
-				println "Supported distros: hadoop22 and phd1"
+				println "Supported distros: cdh4yarn cdh4mr1 cdh5yarn cdh5mr1 phd1 hdp13 hdp20 hadoop22 hadoop11 hadoop12"
 				println "* default"
 				throw new InvalidUserDataException("$hadoopDistro is not a supported distro")
 			}
@@ -106,7 +144,6 @@ configure(mapreduceExampleProjectsWithCommon()) {
 		runtime "log4j:log4j:$log4jVersion"
 		runtime "org.codehaus.groovy:groovy:$groovyVersion"
 		runtime "org.slf4j:slf4j-log4j12:$slf4jVersion"
-		runtime "org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.2.0"
 		testCompile "org.springframework.data:spring-hadoop-test:$springDataVersion"
 		testCompile "org.hamcrest:hamcrest-core:$hamcrestVersion"
 		testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
