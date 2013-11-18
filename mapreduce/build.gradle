@@ -177,7 +177,7 @@ configure(mapreduceExampleProjects()) { mapreduceExampleProject ->
 	}
 
 	apply {
-		task "run-${mapreduceExampleProject.name}"(dependsOn:'classes') << {
+		task "run-${mapreduceExampleProject.name}"(dependsOn:'jar') << {
 			def mainClass = mapreduceExampleProject.hasProperty('main')? "${mapreduceExampleProject.getProperty('main')}":'CommonMain'
 			def args = []
 			mapreduceExampleProject.tasks['run'].main = "org.springframework.data.hadoop.examples.$mainClass"

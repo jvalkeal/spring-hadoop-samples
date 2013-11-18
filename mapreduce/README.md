@@ -1,10 +1,12 @@
 Spring Hadoop HDFS and MapReduce Examples
 =========================================
 
+These samples contains examples of using Spring Hadoop MapReduse and its testing
+integration.
 
 # Examples
 
-* wordcount - todo
+* wordcount - Simple Hadoop's wordcount example
 
 # Imporing Examples to IDE
 
@@ -19,6 +21,5 @@ If you are using IDEA,
 # Running Examples 
 
 Detailed instructions for each example may be found in its own README file.
-These README files has a section *Quick Instructions* which is handy
+These README files has a section *Quick Instructions* if applicable which is handy
 if you're already familiar with example and just want to copy/paste commands.
-
